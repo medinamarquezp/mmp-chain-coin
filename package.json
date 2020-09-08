@@ -1,0 +1,26 @@
+{
+  "name": "mmp-chain-coin",
+  "version": "1.0.0",
+  "description": "Mi primera blockchain y criptomoneda",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/medinamarquezp/mmp-chain-coin.git"
+  },
+  "keywords": [
+    "node",
+    "js",
+    "blockchain",
+    "criptocurrency",
+    "token"
+  ],
+  "author": "Pedro Medina Márquez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/medinamarquezp/mmp-chain-coin/issues"
+  },
+  "homepage": "https://github.com/medinamarquezp/mmp-chain-coin#readme"
+}
