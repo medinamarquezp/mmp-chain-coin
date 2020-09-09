@@ -13,6 +13,8 @@
     "@root": ".",
     "@entities": "./src/entities",
     "@repositories": "./src/repositories",
+    "@handlers": "./apps/api/handlers",
+    "@exceptions": "./apps/api/exceptions",
     "@routes": "./apps/api/routes",
     "@controllers": "./apps/api/controllers"
   },
