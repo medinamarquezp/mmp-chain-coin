@@ -5,11 +5,16 @@
   "main": "index.js",
   "scripts": {
     "postinstall": "link-module-alias",
-    "test": "jest"
+    "preinstall": "command -v link-module-alias && link-module-alias clean || true",
+    "test": "jest",
+    "dev": "nodemon ./apps/api/server.js"
   },
   "_moduleAliases": {
-    "@": ".",
-    "@entities": "./src/entities"
+    "@root": ".",
+    "@entities": "./src/entities",
+    "@repositories": "./src/repositories",
+    "@routes": "./apps/api/routes",
+    "@controllers": "./apps/api/controllers"
   },
   "repository": {
     "type": "git",
@@ -33,7 +38,9 @@
     "nodemon": "^2.0.4"
   },
   "dependencies": {
+    "body-parser": "^1.19.0",
     "crypto-js": "^4.0.0",
+    "express": "^4.17.1",
     "jest": "^26.4.2"
   }
 }
