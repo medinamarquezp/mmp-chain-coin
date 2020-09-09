@@ -6,5 +6,6 @@ module.exports = {
   moduleFileExtensions: ["js"],
   moduleNameMapper: {
     "^@entities/(.*)$": "<rootDir>/src/entities/$1",
+    "^@repositories/(.*)$": "<rootDir>/src/repositories/$1",
   },
 };
