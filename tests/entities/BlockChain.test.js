@@ -37,6 +37,6 @@ describe("Block chain entity test", () => {
     BC.addBlock("Bloque inicial");
     newBC.addBlock("Bloque inicial");
     BC.replaceChain(newBC.chain);
-    expect(BC.chain).not.toEqual(newBC.chain);
+    expect(BC.chain).not.toBe(newBC.chain);
   });
 });
