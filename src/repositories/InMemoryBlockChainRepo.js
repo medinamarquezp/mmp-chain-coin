@@ -8,7 +8,7 @@ class InMemoryBlockChainRepo {
   }
 
   static mineBlock(data) {
-    InMemoryBlockChainRepo.bc.addBlock(data);
+    return InMemoryBlockChainRepo.bc.addBlock(data);
   }
 }
 
