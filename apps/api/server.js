@@ -2,8 +2,8 @@ const express = require("express");
 const bodyParser = require("body-parser");
 
 const app = express();
-const port = process.env.PORT || 3000;
-
+const port = process.env.HTTP_PORT || 3000;
+const P2PServerSingleton = require("@api/P2PServerSingleton");
 const appRoutes = require("@routes/api");
 const Exception = require("@exceptions/Exception");
 const ErrorHandler = require("@handlers/ErrorHandler");
@@ -22,3 +22,6 @@ app.use((err, req, res, next) => {
 app.listen(port, () => {
   console.log(`API server listening on port ${port}`);
 });
+
+const p2pServerInstance = P2PServerSingleton.getInstance();
+p2pServerInstance.listen();
