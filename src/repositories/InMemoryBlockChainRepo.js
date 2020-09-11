@@ -1,14 +1,14 @@
-const BlockChain = require("@entities/blockchain");
-
 class InMemoryBlockChainRepo {
-  static bc = new BlockChain();
-
-  static getAllBlocks() {
-    return InMemoryBlockChainRepo.bc.Chain;
+  constructor(blockChain) {
+    this.blockChain = blockChain;
   }
 
-  static mineBlock(data) {
-    return InMemoryBlockChainRepo.bc.addBlock(data);
+  getAllBlocks() {
+    return this.blockChain.Chain;
+  }
+
+  mineBlock(data) {
+    return this.blockChain.addBlock(data);
   }
 }
 

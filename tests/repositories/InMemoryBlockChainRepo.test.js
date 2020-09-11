@@ -1,18 +1,19 @@
 const InMemoryBlockChainRepo = require("@repositories/InMemoryBlockChainRepo");
 const BlockChain = require("@entities/BlockChain");
 describe("In memory block chain repository", () => {
-  let BC;
+  let BC, repo;
   beforeEach(() => {
     BC = new BlockChain();
+    repo = new InMemoryBlockChainRepo(BC);
   });
   test("get all blocks method should return BC chain", () => {
-    const allBlocks = InMemoryBlockChainRepo.getAllBlocks();
+    const allBlocks = repo.getAllBlocks();
     expect(allBlocks).toEqual(BC.Chain);
   });
   test("mined blocks should display request block data", () => {
     const requestBlockData = "Contenido del block";
-    InMemoryBlockChainRepo.mineBlock(requestBlockData);
-    const getAllBlock = InMemoryBlockChainRepo.getAllBlocks();
+    repo.mineBlock(requestBlockData);
+    const getAllBlock = repo.getAllBlocks();
     const getLastMinedBlock = getAllBlock[getAllBlock.length - 1];
     expect(getLastMinedBlock.data).toEqual(requestBlockData);
   });
