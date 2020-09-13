@@ -1,4 +1,5 @@
 const Block = require("@entities/Block");
+const { DIFFICULTY } = require("@config");
 describe("Block entity test", () => {
   let data, lastBlock, block;
   beforeEach(() => {
@@ -11,5 +12,8 @@ describe("Block entity test", () => {
   });
   test("Block lastHash property should be equal to last block hash", () => {
     expect(block.lastHash).toEqual(lastBlock.hash);
+  });
+  test("It should validate the hash difficulty", () => {
+    expect(block.hash.substring(0, DIFFICULTY)).toEqual("0".repeat(DIFFICULTY));
   });
 });
