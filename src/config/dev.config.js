@@ -1,3 +1,4 @@
 module.exports = {
   DIFFICULTY: 3,
+  MINE_EXECUTION_TIME_MILLISECONDS: 3000,
 };
