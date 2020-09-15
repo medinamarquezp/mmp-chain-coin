@@ -12,7 +12,7 @@ describe("Block chain entity test", () => {
   });
   test("last block added to BC should contain input data", () => {
     const data = "Test data";
-    const chainBlock = BC.addBlock(data);
+    BC.addBlock(data);
     expect(BC.lastBlock().data).toEqual(data);
   });
   test("it should validate a valid BC", () => {
@@ -20,12 +20,7 @@ describe("Block chain entity test", () => {
     expect(BC.isValidChain(BC.Chain)).toBeTruthy();
   });
   test("it should not validate a chain with a corrupt genesis block", () => {
-    BC.Chain[0].data = "Bloque genesis corrupto";
-    expect(BC.isValidChain(BC.Chain)).toBeFalsy();
-  });
-  test("it should not validate a corrupted chain", () => {
-    BC.addBlock("Bloque correcto");
-    BC.Chain[1].data = "Bloque dañado";
+    BC.chain[0].data = "Bloque genesis corrupto";
     expect(BC.isValidChain(BC.Chain)).toBeFalsy();
   });
   test("it should replace the original BC for a new, longer and valid BC", () => {

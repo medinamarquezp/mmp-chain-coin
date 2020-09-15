@@ -25,10 +25,7 @@ class BlockChain {
     for (let i = 1; i < chain.length; i++) {
       const block = chain[i];
       const lastBlock = chain[i - 1];
-      if (
-        block.lastHash !== lastBlock.hash ||
-        block.hash !== Block.blockHash(block)
-      ) {
+      if (block.lastHash !== lastBlock.hash) {
         return false;
       }
     }
