@@ -12,6 +12,7 @@
   "_moduleAliases": {
     "@root": ".",
     "@config": "./src/config/index.js",
+    "@services": "./src/services",
     "@entities": "./src/entities",
     "@repositories": "./src/repositories",
     "@handlers": "./apps/api/handlers",
@@ -45,8 +46,10 @@
   "dependencies": {
     "body-parser": "^1.19.0",
     "crypto-js": "^4.0.0",
+    "elliptic": "^6.5.3",
     "express": "^4.17.1",
     "jest": "^26.4.2",
+    "uuid": "^8.3.0",
     "ws": "^7.3.1"
   }
 }
