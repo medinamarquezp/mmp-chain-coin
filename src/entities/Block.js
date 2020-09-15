@@ -1,4 +1,4 @@
-const SHA256 = require("crypto-js/sha256");
+const Hash = require("@services/Hash");
 const { DIFFICULTY, MINE_EXECUTION_TIME_MILLISECONDS } = require("@config");
 
 class Block {
@@ -35,8 +35,6 @@ class Block {
       timestamp = Date.now();
       difficulty = Block.adjustDifficulty(lastBlock, timestamp);
       hash = Block.hash(timestamp, lastHash, data, nonce, difficulty);
-      console.log(hash);
-      console.log(difficulty);
     } while (hash.substring(0, difficulty) != "0".repeat(difficulty));
     const processTime = Date.now() - initTime;
     return new this(
@@ -60,14 +58,9 @@ class Block {
   }
 
   static hash(timestamp, lastHash, data, nonce, difficulty, processTime) {
-    return SHA256(
+    return Hash.create(
       `${timestamp}${lastHash}${data}${nonce}${difficulty}${processTime}`
-    ).toString();
-  }
-
-  static blockHash(block) {
-    const { timestamp, lastHash, data, nonce, difficulty, processTime } = block;
-    return this.hash(timestamp, lastHash, data, nonce, difficulty, processTime);
+    );
   }
 
   toString() {
