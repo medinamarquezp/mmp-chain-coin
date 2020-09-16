@@ -1,5 +1,6 @@
 const KeyPair = require("@services/Keypair");
 const { INITIAL_BALANCE } = require("@config");
+const Transaction = require("@entities/Transaction");
 
 class Wallet {
   constructor(balance) {
@@ -10,6 +11,19 @@ class Wallet {
 
   sign(dataHash) {
     return this.keyPair.sign(dataHash);
+  }
+
+  createTransaction(recipient, amount, pool) {
+    if (amount > this.balance)
+      throw new Error(`Insufficient funds to transfer '${amount}' tokens`);
+    let transaction = pool.findTransactionByAddress(this.publicKey);
+    if (transaction) {
+      transaction.updateTransaction(this, recipient, amount);
+    } else {
+      transaction = Transaction.newTransaction(this, recipient, amount);
+      pool.updateOrAddTransaction(transaction);
+    }
+    return transaction;
   }
 
   toString() {
