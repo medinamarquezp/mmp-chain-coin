@@ -29,4 +29,31 @@ describe("Transaction entity test", () => {
     );
     expect(Transaction.verifyTransaction(transaction)).toBeTruthy();
   });
+  test("It should calculate a correct balance after update transaction", () => {
+    const transaction = Transaction.newTransaction(
+      senderWallet,
+      recipientWallet.publicKey,
+      20
+    );
+    transaction.updateTransaction(senderWallet, recipientWallet.publicKey, 10);
+    transaction.updateTransaction(senderWallet, recipientWallet.publicKey, 15);
+    const senderWalletBalance = transaction.outputs[0].amount;
+    expect(senderWalletBalance).toBe(5);
+  });
+  test("it should display an error on updating a transaction without sufficient funds", () => {
+    const transaction = Transaction.newTransaction(
+      senderWallet,
+      recipientWallet.publicKey,
+      20
+    );
+    const updateTransaction = () =>
+      transaction.updateTransaction(
+        senderWallet,
+        recipientWallet.publicKey,
+        1000
+      );
+    expect(updateTransaction).toThrow(
+      "Insufficient funds to transfer '1000' tokens"
+    );
+  });
 });

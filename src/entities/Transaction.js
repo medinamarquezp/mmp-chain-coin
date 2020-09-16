@@ -8,10 +8,20 @@ class Transaction {
     this.input = null;
     this.outputs = [];
   }
+
+  updateTransaction(senderWallet, recipientWallet, amount) {
+    const senderOutput = this.outputs.find(
+      (output) => output.address === senderWallet.publicKey
+    );
+    Transaction.checkSenderFunds(amount, senderWallet);
+    senderOutput.amount = senderOutput.amount - amount;
+    this.outputs.push({ amount, address: recipientWallet });
+    Transaction.signTransaction(this, senderWallet);
+  }
+
   static newTransaction(senderWallet, recipientWallet, amount) {
     const transaction = new this();
-    if (amount > senderWallet.balance)
-      throw new Error(`Insufficient funds to transfer '${amount}' tokens`);
+    Transaction.checkSenderFunds(amount, senderWallet);
     transaction.outputs.push(
       ...[
         {
@@ -23,6 +33,11 @@ class Transaction {
     );
     Transaction.signTransaction(transaction, senderWallet);
     return transaction;
+  }
+
+  static checkSenderFunds(amount, senderWallet) {
+    if (amount > senderWallet.balance)
+      throw new Error(`Insufficient funds to transfer '${amount}' tokens`);
   }
 
   static signTransaction(transaction, senderWallet) {
