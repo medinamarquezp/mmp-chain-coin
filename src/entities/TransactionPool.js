@@ -4,7 +4,7 @@ class TransactionPool {
   }
 
   updateOrAddTransaction(transaction) {
-    const transactionFound = this.existsTransaction(transaction);
+    const transactionFound = this.findTransactionById(transaction.id);
     if (transactionFound) {
       const transacionPosition = this.transactions.indexOf(transactionFound);
       this.transactions[transacionPosition] = transaction;
@@ -13,8 +13,12 @@ class TransactionPool {
     }
   }
 
-  existsTransaction(transaction) {
-    return this.transactions.find((t) => t.id === transaction.id);
+  findTransactionById(id) {
+    return this.transactions.find((t) => t.id === id);
+  }
+
+  findTransactionByAddress(address) {
+    return this.transactions.find((t) => t.in.address === address);
   }
 }
 

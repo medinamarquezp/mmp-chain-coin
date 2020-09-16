@@ -16,7 +16,7 @@ describe("Transaction entity test", () => {
       10
     );
     pool.updateOrAddTransaction(transaction);
-    const existsTransaction = pool.existsTransaction(transaction);
+    const existsTransaction = pool.findTransactionById(transaction.id);
     expect(existsTransaction).toBeTruthy();
   });
   test("It should update the values of an existing transaction on the pool", () => {
