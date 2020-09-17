@@ -45,7 +45,7 @@ class Transaction {
       timestamp: Date.now(),
       amount: senderWallet.balance,
       address: senderWallet.publicKey,
-      signature: senderWallet.sign(Hash.create(transaction.outputs)),
+      signature: senderWallet.sign(Hash.sha256(transaction.outputs)),
     };
   }
 
@@ -53,7 +53,7 @@ class Transaction {
     return Keypair.verifySignature(
       transaction.input.address,
       transaction.input.signature,
-      Hash.create(transaction.outputs)
+      Hash.sha256(transaction.outputs)
     );
   }
 }

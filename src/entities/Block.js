@@ -58,7 +58,7 @@ class Block {
   }
 
   static hash(timestamp, lastHash, data, nonce, difficulty, processTime) {
-    return Hash.create(
+    return Hash.sha256(
       `${timestamp}${lastHash}${data}${nonce}${difficulty}${processTime}`
     );
   }
