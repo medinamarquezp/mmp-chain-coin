@@ -5,7 +5,6 @@
   "main": "index.js",
   "scripts": {
     "postinstall": "link-module-alias",
-    "preinstall": "command -v link-module-alias && link-module-alias clean || true",
     "test": "jest",
     "dev": "nodemon ./apps/api/server.js"
   },
@@ -44,11 +43,13 @@
     "nodemon": "^2.0.4"
   },
   "dependencies": {
+    "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
     "crypto-js": "^4.0.0",
     "elliptic": "^6.5.3",
     "express": "^4.17.1",
     "jest": "^26.4.2",
+    "jsonwebtoken": "^8.5.1",
     "uuid": "^8.3.0",
     "ws": "^7.3.1"
   }
