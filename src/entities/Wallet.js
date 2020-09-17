@@ -9,10 +9,7 @@ class Wallet {
     this.balance = INITIAL_BALANCE;
     this.keyPair = KeyPair.generate();
     this.publicKey = this.keyPair.getPublic("hex");
-  }
-
-  get privateKey() {
-    return this.keyPair.getPrivate("hex");
+    this.privateKey = this.keyPair.getPrivate("hex");
   }
 
   getWalletData() {
