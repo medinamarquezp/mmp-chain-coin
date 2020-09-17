@@ -6,6 +6,10 @@ class Keypair {
     return ec.genKeyPair();
   }
 
+  static keyPairFromPrivateKey(privateKey) {
+    return ec.keyFromPrivate(privateKey);
+  }
+
   static verifySignature(publicKey, signature, dataHash) {
     return ec.keyFromPublic(publicKey, "hex").verify(dataHash, signature);
   }
