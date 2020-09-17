@@ -1,16 +1,27 @@
-const KeyPair = require("@services/Keypair");
 const { INITIAL_BALANCE } = require("@config");
+const Uuid = require("@services/Uuid");
+const KeyPair = require("@services/Keypair");
 const Transaction = require("@entities/Transaction");
 
 class Wallet {
-  constructor(balance) {
-    this.balance = balance ? balance : INITIAL_BALANCE;
+  constructor() {
+    this.id = Uuid.generate();
+    this.balance = INITIAL_BALANCE;
     this.keyPair = KeyPair.generate();
     this.publicKey = this.keyPair.getPublic("hex");
   }
 
   get privateKey() {
     return this.keyPair.getPrivate("hex");
+  }
+
+  getWalletData() {
+    return {
+      id: this.id,
+      publicKey: this.publicKey,
+      privateKey: this.privateKey,
+      balance: this.balance,
+    };
   }
 
   sign(dataHash) {
@@ -28,13 +39,6 @@ class Wallet {
       pool.updateOrAddTransaction(transaction);
     }
     return transaction;
-  }
-
-  toString() {
-    `WALLET:
-     Public key: ${this.publicKey}
-     Balance: ${this.balance}
-    `;
   }
 }
 
