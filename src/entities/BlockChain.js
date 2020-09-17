@@ -5,10 +5,6 @@ class BlockChain {
     this.chain = [Block.genesis()];
   }
 
-  get Chain() {
-    return this.chain;
-  }
-
   lastBlock() {
     return this.chain[this.chain.length - 1];
   }

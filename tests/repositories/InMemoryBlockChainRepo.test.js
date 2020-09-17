@@ -8,7 +8,7 @@ describe("In memory block chain repository", () => {
   });
   test("get all blocks method should return BC chain", () => {
     const allBlocks = repo.getAllBlocks();
-    expect(allBlocks).toEqual(BC.Chain);
+    expect(allBlocks).toEqual(BC.chain);
   });
   test("mined blocks should display request block data", () => {
     const requestBlockData = "Contenido del block";

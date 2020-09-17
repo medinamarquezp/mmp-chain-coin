@@ -4,7 +4,7 @@ class InMemoryBlockChainRepo {
   }
 
   getAllBlocks() {
-    return this.blockChain.Chain;
+    return this.blockChain.chain;
   }
 
   mineBlock(data) {
