@@ -26,8 +26,7 @@ class Wallet {
   }
 
   createTransaction(recipient, amount, pool) {
-    if (amount > this.balance)
-      throw new Error(`Insufficient funds to transfer '${amount}' tokens`);
+    Transaction.checkSenderFunds(amount, this);
     let transaction = pool.findTransactionByAddress(this.publicKey);
     if (transaction) {
       transaction.updateTransaction(this, recipient, amount);
