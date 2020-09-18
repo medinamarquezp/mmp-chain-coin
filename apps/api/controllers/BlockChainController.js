@@ -19,8 +19,7 @@ class BlockChainController {
       );
     try {
       const p2pServerInstance = P2PServerSingleton.getInstance();
-      const block = BlockChainController.repo.mineBlock(data);
-      console.log(`New block added to chain: ${block}`);
+      BlockChainController.repo.mineBlock(data);
       p2pServerInstance.syncChains();
       res.redirect("/api/blocks");
     } catch (error) {

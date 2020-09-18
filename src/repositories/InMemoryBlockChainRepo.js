@@ -8,7 +8,9 @@ class InMemoryBlockChainRepo {
   }
 
   mineBlock(data) {
-    return this.blockChain.addBlock(data);
+    const block = this.blockChain.addBlock(data);
+    console.log(`New block added to chain: ${block}`);
+    return block;
   }
 }
 
