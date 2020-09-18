@@ -6,7 +6,7 @@ class InMemoryUserRepository {
     this.users = [];
   }
   async createUser(username, email, password) {
-    this.validateIdUserExists(email);
+    this.validateIfUserExists(email);
     User.validatePassword(password);
     const hashedPassword = await Hash.password(password);
     const userCreated = new User(username, email, hashedPassword);
@@ -26,7 +26,7 @@ class InMemoryUserRepository {
     return this.users.find((user) => user.email === email);
   }
 
-  validateIdUserExists(email) {
+  validateIfUserExists(email) {
     if (this.findUserByEmail(email)) throw new Error("User already exists");
   }
 
