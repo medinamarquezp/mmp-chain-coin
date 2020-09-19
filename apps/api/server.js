@@ -4,12 +4,12 @@ const bodyParser = require("body-parser");
 const app = express();
 const port = process.env.HTTP_PORT || 3000;
 const P2PServerSingleton = require("@api/P2PServerSingleton");
-const appRoutes = require("@routes/api");
+const blockChainRoutes = require("@routes/blockchain");
 const Exception = require("@exceptions/Exception");
 const ErrorHandler = require("@handlers/ErrorHandler");
 
 app.use(bodyParser.json());
-app.use("/api", appRoutes);
+app.use("/api/blockchain", blockChainRoutes);
 
 app.use("*", (req, res, next) => {
   throw new Exception(404, "Not found");

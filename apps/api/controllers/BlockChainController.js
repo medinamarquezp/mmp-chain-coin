@@ -21,7 +21,7 @@ class BlockChainController {
       const p2pServerInstance = P2PServerSingleton.getInstance();
       BlockChainController.repo.mineBlock(data);
       p2pServerInstance.syncChains();
-      res.redirect("/api/blocks");
+      res.redirect("/api/blockchain/blocks");
     } catch (error) {
       throw new Exception(500, `Error on mining a new block: ${error}`);
     }
