@@ -10,15 +10,6 @@ class User {
     this.wallets = [];
   }
 
-  static validatePassword(password) {
-    if (!password) throw new Error("Password required");
-    const regexAZaz09min8 = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,255}$/;
-    if (!regexAZaz09min8.test(password))
-      throw new Error(
-        "Password must have at least 8 characters, letters and numbers [a-zA-Z0-9]"
-      );
-  }
-
   getUserToken() {
     const userData = {
       userId: this.userId,
