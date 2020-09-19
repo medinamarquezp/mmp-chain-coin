@@ -17,6 +17,7 @@
     "@handlers": "./apps/api/handlers",
     "@exceptions": "./apps/api/exceptions",
     "@routes": "./apps/api/routes",
+    "@validators": "./apps/api/validators",
     "@controllers": "./apps/api/controllers",
     "@api": "./apps/api",
     "@p2p": "./apps/p2p"
@@ -48,6 +49,7 @@
     "crypto-js": "^4.0.0",
     "elliptic": "^6.5.3",
     "express": "^4.17.1",
+    "express-validator": "^6.6.1",
     "jest": "^26.4.2",
     "jsonwebtoken": "^8.5.1",
     "uuid": "^8.3.0",
