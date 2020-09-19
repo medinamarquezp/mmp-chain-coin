@@ -13,7 +13,7 @@ class Hash {
     try {
       hashedPassword = await bcrypt.hash(plainPassword, Hash.salt);
     } catch (err) {
-      console.error("Error on hashing plain passowrd, ", err);
+      throw new Error(`Error on hashing plain passowrd, ${err}`);
     }
     return hashedPassword;
   }
@@ -23,7 +23,7 @@ class Hash {
     try {
       resultComparison = await bcrypt.compare(plainPassword, hash);
     } catch (err) {
-      console.error("Error on comparing plain password to hash", err);
+      throw new Error(`Error on comparing plain password to hash, ${err}`);
     }
     return resultComparison;
   }

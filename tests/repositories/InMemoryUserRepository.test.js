@@ -10,13 +10,6 @@ describe("In memory user repository", () => {
       repo.createUser("test", "test@test.es", "testASD123");
     await expect(createDuplicateUser()).rejects.toThrow("User already exists");
   });
-  test("it should throw an error if password is not correct on creating user", async () => {
-    const createNewUserWithInvalidPassword = () =>
-      repo.createUser("test", "test@test.es", "test");
-    await expect(createNewUserWithInvalidPassword()).rejects.toThrow(
-      "Password must have at least 8 characters, letters and numbers [a-zA-Z0-9]"
-    );
-  });
   test("it should create a new user", async () => {
     await repo.createUser("test", "test@test.es", "testASD123");
     const firstUserOnRepo = repo.users[0];
