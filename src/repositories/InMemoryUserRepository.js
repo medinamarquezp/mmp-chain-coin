@@ -5,10 +5,9 @@ class InMemoryUserRepository {
   constructor() {
     this.users = [];
   }
-  async createUser(username, email, password) {
+  createUser(username, email, password) {
     this.validateIfUserExists(email);
-    User.validatePassword(password);
-    const hashedPassword = await Hash.password(password);
+    const hashedPassword = (async () => await Hash.password(password))();
     const userCreated = new User(username, email, hashedPassword);
     this.users.push(userCreated);
     return userCreated.getUserToken();
