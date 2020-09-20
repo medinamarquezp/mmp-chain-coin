@@ -5,12 +5,14 @@ const app = express();
 const port = process.env.HTTP_PORT || 3000;
 const P2PServerSingleton = require("@api/P2PServerSingleton");
 const authRoutes = require("@routes/auth");
+const walletsRoutes = require("@routes/wallets");
 const blockChainRoutes = require("@routes/blockchain");
 const Exception = require("@exceptions/Exception");
 const ErrorHandler = require("@handlers/ErrorHandler");
 
 app.use(bodyParser.json());
 app.use("/api/auth", authRoutes);
+app.use("/api/wallets", walletsRoutes);
 app.use("/api/blockchain", blockChainRoutes);
 
 app.use("*", (req, res, next) => {
