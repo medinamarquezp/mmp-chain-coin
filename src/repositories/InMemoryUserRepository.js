@@ -35,6 +35,19 @@ class InMemoryUserRepository {
     return userFound;
   }
 
+  getWallet(userId, walletId) {
+    const user = this.findUserById(userId);
+    const userWallets = user.wallets;
+    const walletFound = this.findWallet(userWallets, walletId);
+    return walletFound;
+  }
+
+  findWallet(userWallets, walletId) {
+    const walletFound = userWallets.find((wallet) => wallet.id === walletId);
+    if (!walletFound) throw new Error(`No wallets found by id ${walletId}`);
+    return walletFound;
+  }
+
   findUserByProperty(property, value) {
     return this.users.find((user) => user[property] === value);
   }
