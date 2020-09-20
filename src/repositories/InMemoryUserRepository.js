@@ -22,6 +22,12 @@ class InMemoryUserRepository {
     return user.getUserToken();
   }
 
+  getWallets(userId) {
+    const userFound = this.findUserByProperty("userId", userId);
+    if (!userFound) throw new Error(`No user found with ID ${userId}`);
+    return userFound.getWallets();
+  }
+
   findUserByProperty(property, value) {
     return this.users.find((user) => user[property] === value);
   }
@@ -33,7 +39,7 @@ class InMemoryUserRepository {
       decodedToken.data.userId
     );
     if (!foundUser) {
-      throw new Error("User not found with token");
+      throw new Error("Invalid token");
     }
     return foundUser;
   }
