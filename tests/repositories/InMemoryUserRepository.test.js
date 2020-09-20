@@ -42,4 +42,29 @@ describe("In memory user repository", () => {
     const foundUser = repo.findUserByToken(createdUserToken);
     expect(foundUser.username).toBe("test");
   });
+  test("It should create a new wallet", async () => {
+    const userToken = await repo.createUser(
+      "test",
+      "test@test.es",
+      "testASD123"
+    );
+    const user = repo.findUserByToken(userToken);
+    repo.createNewWallet(user.userId);
+    const totalWallets = user.wallets.length;
+    const walletBallance = user.wallets[0].balance;
+    expect(totalWallets).toBe(1);
+    expect(walletBallance).toBe(50);
+  });
+  test("It should display user wallets", async () => {
+    const userToken = await repo.createUser(
+      "test",
+      "test@test.es",
+      "testASD123"
+    );
+    const user = repo.findUserByToken(userToken);
+    repo.createNewWallet(user.userId);
+    const userWallets = repo.getWallets(user.userId);
+    const walletBalance = userWallets[0].balance;
+    expect(walletBalance).toBe(50);
+  });
 });
