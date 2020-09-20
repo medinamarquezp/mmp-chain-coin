@@ -17,7 +17,7 @@ class InMemoryUserRepository {
     this.validateIfUserDoesNotExist(email);
     const user = this.findUserByEmail(email);
     const isPasswordCorrect = await Hash.compare(password, user.password);
-    if (!isPasswordCorrect) throw new Error("Incorrect password");
+    if (!isPasswordCorrect) throw new Error("Wrong password");
     return user.getUserToken();
   }
 

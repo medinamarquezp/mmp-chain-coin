@@ -7,7 +7,10 @@ class AuthController {
   static repo = new InMemoryUserRepository();
 
   static async signUp(req, res, next) {
-    AuthController.validateRequest(req);
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return next(new Exception(422, errors.array()));
+    }
     const { username, email, password } = req.body;
     let createdUser;
     try {
@@ -17,22 +20,24 @@ class AuthController {
         password
       );
     } catch (error) {
-      AuthController.catchError(error);
+      return next(new Exception(400, error.message));
     }
     ResponseHandler.response(res, createdUser);
   }
 
-  static catchError(error) {
-    const err = new Exception(400, error.message);
-    return next(err);
-  }
-
-  static validateRequest(req) {
+  static async signIn(req, res, next) {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      const err = new Exception(422, errors.array());
-      return next(err);
+      return next(new Exception(422, errors.array()));
     }
+    const { email, password } = req.body;
+    let loggedUser;
+    try {
+      loggedUser = await AuthController.repo.getUserToken(email, password);
+    } catch (error) {
+      return next(new Exception(400, error.message));
+    }
+    ResponseHandler.response(res, loggedUser);
   }
 }
 
