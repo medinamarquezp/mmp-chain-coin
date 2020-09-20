@@ -1,8 +1,8 @@
-const { v1: uuidV1 } = require("uuid");
+const { v4: uuidV4 } = require("uuid");
 
 class Uuid {
   static generate() {
-    return uuidV1();
+    return uuidV4();
   }
 }
 
