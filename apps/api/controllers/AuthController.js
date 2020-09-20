@@ -1,10 +1,10 @@
+const userRepo = require("@memorepos/userRepo");
 const Exception = require("@exceptions/Exception");
 const { validationResult } = require("express-validator");
 const ResponseHandler = require("@handlers/ResponseHandler");
-const InMemoryUserRepository = require("@repositories/InMemoryUserRepository");
 
 class AuthController {
-  static repo = new InMemoryUserRepository();
+  static repo = userRepo;
 
   static async signUp(req, res, next) {
     const errors = validationResult(req);

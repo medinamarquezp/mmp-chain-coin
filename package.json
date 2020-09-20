@@ -19,6 +19,8 @@
     "@routes": "./apps/api/routes",
     "@validators": "./apps/api/validators",
     "@controllers": "./apps/api/controllers",
+    "@middlewares": "./apps/api/middlewares",
+    "@memorepos": "./apps/api/memoryRepos",
     "@api": "./apps/api",
     "@p2p": "./apps/p2p"
   },
