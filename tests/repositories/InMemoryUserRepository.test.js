@@ -5,7 +5,7 @@ describe("In memory user repository", () => {
     repo = new InMemoryUserRepository();
   });
   test("it should validate if user already exists on creating a new user", async () => {
-    const user = await repo.createUser("test", "test@test.es", "testASD123");
+    await repo.createUser("test", "test@test.es", "testASD123");
     const createDuplicateUser = () =>
       repo.createUser("test", "test@test.es", "testASD123");
     await expect(createDuplicateUser()).rejects.toThrow("User already exists");
@@ -22,7 +22,7 @@ describe("In memory user repository", () => {
   test("it should display an error on getting a token if password is incorrect", async () => {
     await repo.createUser("test", "test@test.es", "testASD123");
     const getUserToken = () => repo.getUserToken("test@test.es", "test");
-    await expect(getUserToken()).rejects.toThrow("Incorrect password");
+    await expect(getUserToken()).rejects.toThrow("Wrong password");
   });
   test("It should get a correct token", async () => {
     const createdUserToken = await repo.createUser(
@@ -32,5 +32,14 @@ describe("In memory user repository", () => {
     );
     const getUserToken = await repo.getUserToken("test@test.es", "testASD123");
     expect(createdUserToken).toBe(getUserToken);
+  });
+  test("It should find an user by token", async () => {
+    const createdUserToken = await repo.createUser(
+      "test",
+      "test@test.es",
+      "testASD123"
+    );
+    const foundUser = repo.findUserByToken(createdUserToken);
+    expect(foundUser.username).toBe("test");
   });
 });

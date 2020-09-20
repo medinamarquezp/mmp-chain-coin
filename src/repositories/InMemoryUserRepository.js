@@ -1,5 +1,6 @@
 const User = require("@entities/User");
 const Hash = require("@services/Hash");
+const Token = require("@services/Token");
 
 class InMemoryUserRepository {
   constructor() {
@@ -15,22 +16,36 @@ class InMemoryUserRepository {
 
   async getUserToken(email, password) {
     this.validateIfUserDoesNotExist(email);
-    const user = this.findUserByEmail(email);
+    const user = this.findUserByProperty(email);
     const isPasswordCorrect = await Hash.compare(password, user.password);
     if (!isPasswordCorrect) throw new Error("Wrong password");
     return user.getUserToken();
   }
 
-  findUserByEmail(email) {
-    return this.users.find((user) => user.email === email);
+  findUserByProperty(property, value) {
+    return this.users.find((user) => user[property] === value);
+  }
+
+  findUserByToken(token) {
+    const decodedToken = Token.decode(token);
+    const foundUser = this.findUserByProperty(
+      "userId",
+      decodedToken.data.userId
+    );
+    if (!foundUser) {
+      throw new Error("User not found with token");
+    }
+    return foundUser;
   }
 
   validateIfUserExists(email) {
-    if (this.findUserByEmail(email)) throw new Error("User already exists");
+    if (this.findUserByProperty("email", email))
+      throw new Error("User already exists");
   }
 
   validateIfUserDoesNotExist(email) {
-    if (!this.findUserByEmail(email)) throw new Error("User does not exists");
+    if (!this.findUserByProperty("email", email))
+      throw new Error("User does not exists");
   }
 }
 
