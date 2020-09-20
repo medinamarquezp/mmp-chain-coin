@@ -32,7 +32,7 @@ class User {
   }
 
   checkWalletExists(walletID) {
-    const walletFound = this.wallets.find((wallet) => (wallet.id = walletID));
+    const walletFound = this.wallets.find((wallet) => wallet.id === walletID);
     if (walletFound) throw new Error("The wallet already exists for this user");
   }
 }
