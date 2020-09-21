@@ -3,9 +3,16 @@ const ws = require("ws");
 const peers = process.env.PEERS ? process.env.PEERS.split(",") : [];
 const P2P_PORT = process.env.P2P_PORT || 5001;
 
+const messageTypes = {
+  chain: "CHAIN",
+  transaction: "TRANSACTION",
+  clear_transactions: "CLEAR_TRANSACTIONS",
+};
+
 class P2PServer {
-  constructor(blockchain) {
+  constructor(blockchain, transactionPool) {
     this.blockchain = blockchain;
+    this.transactionPool = transactionPool;
     this.sockets = [];
   }
 
@@ -33,18 +40,57 @@ class P2PServer {
   messageHandler(socket) {
     socket.on("message", (message) => {
       const data = JSON.parse(message);
-      this.blockchain.replaceChain(data);
-      console.log("Data: ", data);
+      switch (data.type) {
+        case messageTypes.chain:
+          this.blockchain.replaceChain(data.chain);
+          break;
+        case messageTypes.transaction:
+          this.transactionPool.updateOrAddTransaction(data.transaction);
+          break;
+        case messageTypes.clear_transactions:
+          this.transactionPool.clear();
+          break;
+      }
     });
   }
 
   sendChain(socket) {
-    socket.send(JSON.stringify(this.blockchain.chain));
+    socket.send(
+      JSON.stringify({
+        type: messageTypes.chain,
+        chain: this.blockchain.chain,
+      })
+    );
   }
 
   syncChains() {
     this.sockets.forEach((socket) => {
       this.sendChain(socket);
+    });
+  }
+
+  sendTransaction(socket, transaction) {
+    socket.send(
+      JSON.stringify({
+        type: messageTypes.transaction,
+        transaction,
+      })
+    );
+  }
+
+  broadcastTransaction(transaction) {
+    this.sockets.forEach((socket) => {
+      this.sendTransaction(socket, transaction);
+    });
+  }
+
+  broadcastClearTransaction() {
+    this.sockets.forEach((socket) => {
+      socket.send(
+        JSON.stringify({
+          type: messageTypes.clear_transactions,
+        })
+      );
     });
   }
 }

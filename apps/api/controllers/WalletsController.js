@@ -1,12 +1,14 @@
 const userRepo = require("@memorepos/userRepo");
 const Exception = require("@exceptions/Exception");
 const ResponseHandler = require("@handlers/ResponseHandler");
+const P2PServerSingleton = require("@api/P2PServerSingleton");
 const TransactionPoolSingleton = require("@api/TransactionPoolSingleton");
 const { validationResult } = require("express-validator");
 
 class WalletsController {
   static repo = userRepo;
   static pool = TransactionPoolSingleton.getInstance();
+  static p2pServer = P2PServerSingleton.getInstance();
 
   static getWallets(req, res, next) {
     try {
@@ -47,6 +49,7 @@ class WalletsController {
         amount,
         WalletsController.pool
       );
+      WalletsController.p2pServer.broadcastTransaction(transaction);
       ResponseHandler.response(res, transaction);
     } catch (error) {
       return next(
