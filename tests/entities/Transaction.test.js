@@ -1,5 +1,6 @@
 const Wallet = require("@entities/Wallet");
 const Transaction = require("@entities/Transaction");
+const { MINING_REWARD } = require("@config");
 
 describe("Transaction entity test", () => {
   let senderWallet, recipientWallet;
@@ -55,5 +56,15 @@ describe("Transaction entity test", () => {
     expect(updateTransaction).toThrow(
       "Insufficient funds to transfer '1000' tokens"
     );
+  });
+  test("it should regard transaction to miner", () => {
+    const transaction = Transaction.rewardTransaction(
+      senderWallet,
+      Wallet.blockChainWallet()
+    );
+    const rewardedAmount = transaction.outputs.find(
+      (output) => output.address === senderWallet.publicKey
+    ).amount;
+    expect(rewardedAmount).toBe(MINING_REWARD);
   });
 });

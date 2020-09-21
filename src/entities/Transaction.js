@@ -1,6 +1,7 @@
 const Uuid = require("@services/Uuid");
 const Hash = require("@services/Hash");
 const Keypair = require("@services/Keypair");
+const { MINING_REWARD } = require("@config");
 
 class Transaction {
   constructor() {
@@ -19,20 +20,31 @@ class Transaction {
     Transaction.signTransaction(this, senderWallet);
   }
 
-  static newTransaction(senderWallet, recipientWallet, amount) {
+  static transactionWithOutputs(senderWallet, outputs) {
     const transaction = new this();
-    Transaction.checkSenderFunds(amount, senderWallet);
-    transaction.outputs.push(
-      ...[
-        {
-          amount: senderWallet.balance - amount,
-          address: senderWallet.publicKey,
-        },
-        { amount, address: recipientWallet },
-      ]
-    );
+    transaction.outputs.push(...outputs);
     Transaction.signTransaction(transaction, senderWallet);
     return transaction;
+  }
+
+  static newTransaction(senderWallet, recipientWallet, amount) {
+    Transaction.checkSenderFunds(amount, senderWallet);
+    return Transaction.transactionWithOutputs(senderWallet, [
+      {
+        amount: senderWallet.balance - amount,
+        address: senderWallet.publicKey,
+      },
+      { amount, address: recipientWallet },
+    ]);
+  }
+
+  static rewardTransaction(minerWallet, senderWallet) {
+    return Transaction.transactionWithOutputs(senderWallet, [
+      {
+        amount: MINING_REWARD,
+        address: minerWallet.publicKey,
+      },
+    ]);
   }
 
   static checkSenderFunds(amount, senderWallet) {
