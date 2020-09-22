@@ -26,15 +26,22 @@ class Wallet {
   }
 
   createTransaction(recipient, amount, pool) {
-    Transaction.checkSenderFunds(amount, this);
     let transaction = pool.findTransactionByAddress(this.publicKey);
     if (transaction) {
+      this.checkFunds(amount, transaction);
       transaction.updateTransaction(this, recipient, amount);
     } else {
+      Transaction.checkSenderFunds(amount, this);
       transaction = Transaction.newTransaction(this, recipient, amount);
       pool.updateOrAddTransaction(transaction);
     }
     return transaction;
+  }
+
+  checkFunds(amount, transaction) {
+    const outputsAmount = transaction.outputs[0].amount;
+    if (amount > outputsAmount)
+      throw new Error(`Insufficient funds to transfer '${amount}' tokens`);
   }
 
   static blockChainWallet() {
