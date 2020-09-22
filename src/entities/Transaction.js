@@ -11,6 +11,7 @@ class Transaction {
   }
 
   updateTransaction(senderWallet, recipientWallet, amount) {
+    Transaction.checkNegativeTransactions(amount);
     const senderOutput = this.outputs.find(
       (output) => output.address === senderWallet.publicKey
     );
@@ -28,6 +29,7 @@ class Transaction {
   }
 
   static newTransaction(senderWallet, recipientWallet, amount) {
+    Transaction.checkNegativeTransactions(amount);
     Transaction.checkSenderFunds(amount, senderWallet);
     return Transaction.transactionWithOutputs(senderWallet, [
       {
@@ -45,6 +47,10 @@ class Transaction {
         address: minerWallet.publicKey,
       },
     ]);
+  }
+
+  static checkNegativeTransactions(amount) {
+    if (amount <= 0) throw new Error("Amount should be greater than 0");
   }
 
   static checkSenderFunds(amount, senderWallet) {
