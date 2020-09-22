@@ -6,8 +6,8 @@ const newTransactionValidationRules = () => {
     check("amount")
       .notEmpty()
       .withMessage("Amount required")
-      .isInt()
-      .withMessage("Amount must be a number"),
+      .isFloat()
+      .withMessage("Amount must be a float value"),
   ];
 };
 
