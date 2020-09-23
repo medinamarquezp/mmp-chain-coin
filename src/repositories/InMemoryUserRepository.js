@@ -7,6 +7,7 @@ class InMemoryUserRepository {
   constructor() {
     this.users = [];
   }
+
   async createUser(username, email, password) {
     this.validateIfUserExists(email);
     const hashedPassword = await Hash.password(password);
@@ -21,31 +22,6 @@ class InMemoryUserRepository {
     const isPasswordCorrect = await Hash.compare(password, user.password);
     if (!isPasswordCorrect) throw new Error("Wrong password");
     return user.getUserToken();
-  }
-
-  getWallets(userId) {
-    const userFound = this.findUserById(userId);
-    return userFound.getWallets();
-  }
-
-  createNewWallet(userId) {
-    const userFound = this.findUserById(userId);
-    const wallet = new Wallet();
-    userFound.addNewWallet(wallet);
-    return userFound;
-  }
-
-  getWallet(userId, walletId) {
-    const user = this.findUserById(userId);
-    const userWallets = user.wallets;
-    const walletFound = this.findWallet(userWallets, walletId);
-    return walletFound;
-  }
-
-  findWallet(userWallets, walletId) {
-    const walletFound = userWallets.find((wallet) => wallet.id === walletId);
-    if (!walletFound) throw new Error(`No wallets found by id ${walletId}`);
-    return walletFound;
   }
 
   findUserByProperty(property, value) {
@@ -78,6 +54,52 @@ class InMemoryUserRepository {
   validateIfUserDoesNotExist(email) {
     if (!this.findUserByProperty("email", email))
       throw new Error("User does not exists");
+  }
+
+  getWallets(userId) {
+    const userFound = this.findUserById(userId);
+    return userFound.getWallets();
+  }
+
+  getWallet(userId, walletId) {
+    const user = this.findUserById(userId);
+    const userWallets = user.wallets;
+    const walletFound = this.findWallet(userWallets, walletId);
+    return walletFound;
+  }
+
+  createNewWallet(userId) {
+    const userFound = this.findUserById(userId);
+    const wallet = new Wallet();
+    userFound.addNewWallet(wallet);
+    return userFound;
+  }
+
+  updateWalletBalance(publicKey, amount) {
+    this.users = this.users.map((user) => {
+      if (user.wallets) {
+        const index = user.wallets.findIndex(
+          (wallet) => wallet.publicKey === publicKey
+        );
+        user.wallets[index].balance += amount;
+      }
+      return user;
+    });
+  }
+
+  findWallet(userWallets, walletId) {
+    const walletFound = userWallets.find((wallet) => wallet.id === walletId);
+    if (!walletFound) throw new Error(`No wallets found by id ${walletId}`);
+    return walletFound;
+  }
+
+  findWalletByPublicKey(userWallets, publicKey) {
+    const walletFound = userWallets.find(
+      (wallet) => wallet.publicKey === publicKey
+    );
+    if (!walletFound)
+      throw new Error(`No wallets found by public key ${publicKey}`);
+    return walletFound;
   }
 }
 

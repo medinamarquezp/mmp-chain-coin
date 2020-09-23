@@ -67,4 +67,12 @@ describe("In memory user repository", () => {
     const walletBalance = userWallets[0].balance;
     expect(walletBalance).toBe(50);
   });
+  test("It should update wallet balance on repo", async () => {
+    const userToken = await repo.createUser("user1", "u1@test.es", "asdASD123");
+    const user = repo.findUserByToken(userToken);
+    const wallet = repo.createNewWallet(user.userId);
+    const userWallet = user.wallets[0];
+    repo.updateWalletBalance(userWallet.publicKey, 20);
+    expect(userWallet.balance).toBe(70);
+  });
 });
