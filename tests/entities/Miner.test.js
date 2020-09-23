@@ -20,7 +20,6 @@ describe("Miner entity test", () => {
   });
   test("It should mine transactions", () => {
     const minedBlock = miner.mine();
-    console.log(minedBlock);
     expect(transactionPool.transactions.length).toBe(0);
     expect(minedBlock.data.length).toBe(3);
   });
