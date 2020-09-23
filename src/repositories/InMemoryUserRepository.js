@@ -75,13 +75,16 @@ class InMemoryUserRepository {
     return userFound;
   }
 
-  updateWalletBalance(publicKey, amount) {
+  updateWalletBalance(publicKey, amount, action = "add") {
     this.users = this.users.map((user) => {
       if (user.wallets) {
         const index = user.wallets.findIndex(
           (wallet) => wallet.publicKey === publicKey
         );
-        user.wallets[index].balance += amount;
+        if (index >= 0 && action === "add")
+          user.wallets[index].balance += amount;
+        if (index >= 0 && action === "replace")
+          user.wallets[index].balance = amount;
       }
       return user;
     });
