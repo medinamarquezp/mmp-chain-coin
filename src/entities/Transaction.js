@@ -44,7 +44,7 @@ class Transaction {
     return Transaction.transactionWithOutputs(senderWallet, [
       {
         amount: MINING_REWARD,
-        address: minerWallet.publicKey,
+        address: minerWallet,
       },
     ]);
   }
