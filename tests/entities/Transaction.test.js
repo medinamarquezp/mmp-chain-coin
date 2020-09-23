@@ -57,13 +57,13 @@ describe("Transaction entity test", () => {
       "Insufficient funds to transfer '1000' tokens"
     );
   });
-  test("it should regard transaction to miner", () => {
+  test("it should reward transaction to miner", () => {
     const transaction = Transaction.rewardTransaction(
       senderWallet,
       Wallet.blockChainWallet()
     );
     const rewardedAmount = transaction.outputs.find(
-      (output) => output.address === senderWallet.publicKey
+      (output) => output.address.publicKey === senderWallet.publicKey
     ).amount;
     expect(rewardedAmount).toBe(MINING_REWARD);
   });

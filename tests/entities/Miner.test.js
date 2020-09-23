@@ -28,7 +28,7 @@ describe("Miner entity test", () => {
     const minedBlock = miner.mine();
     const rewardTransaction = Miner.rewardTransaction(minedBlock);
     expect(rewardTransaction.amount).toBe(MINING_REWARD);
-    expect(rewardTransaction.address).toBe(minerPublicKey);
+    expect(rewardTransaction.address.publicKey).toBe(minerPublicKey);
   });
   test("It should get transactions list without rewarded transaction", () => {
     const minedBlock = miner.mine();
