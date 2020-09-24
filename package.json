@@ -6,7 +6,8 @@
   "scripts": {
     "postinstall": "link-module-alias",
     "test": "jest",
-    "dev": "nodemon ./apps/api/server.js"
+    "dev": "nodemon ./apps/api/server.js",
+    "start": "node ./apps/api/server.js"
   },
   "_moduleAliases": {
     "@root": ".",
