@@ -35,8 +35,8 @@ class TransactionsController {
         TransactionsController.p2pServer
       );
       const minedBlock = miner.mine();
-      TransactionsController.payReward(minedBlock);
       TransactionsController.processTransactions(minedBlock);
+      TransactionsController.payReward(minedBlock);
       ResponseHandler.response(res, minedBlock);
     } catch (error) {
       return next(new Exception(400, `Error on mining transactions: ${error}`));
