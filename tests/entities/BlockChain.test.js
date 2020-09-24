@@ -1,5 +1,6 @@
 const Block = require("@entities/Block");
 const BlockChain = require("@entities/BlockChain");
+const Hash = require("@services/Hash");
 describe("Block chain entity test", () => {
   let BC;
   beforeEach(() => {
@@ -13,7 +14,7 @@ describe("Block chain entity test", () => {
   test("last block added to BC should contain input data", () => {
     const data = "Test data";
     BC.addBlock(data);
-    expect(BC.lastBlock().data).toEqual(data);
+    expect(BC.lastBlock().data).toEqual(Hash.sha256(data));
   });
   test("it should validate a valid BC", () => {
     BC.addBlock("Test block valido");

@@ -37,6 +37,7 @@ class Block {
       hash = Block.hash(timestamp, lastHash, data, nonce, difficulty);
     } while (hash.substring(0, difficulty) != "0".repeat(difficulty));
     const processTime = Date.now() - initTime;
+    data = typeof data === "string" ? Hash.sha256(data) : data;
     return new this(
       timestamp,
       lastHash,

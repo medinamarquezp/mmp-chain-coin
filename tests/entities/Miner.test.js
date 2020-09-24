@@ -23,7 +23,7 @@ describe("Miner entity test", () => {
     expect(transactionPool.transactions.length).toBe(0);
     expect(minedBlock.data.length).toBe(3);
   });
-  test("It should regard to miner when mine a new transaction", () => {
+  test("It should reward to miner when mine a new transaction", () => {
     const minerPublicKey = wallet.publicKey;
     const minedBlock = miner.mine();
     const rewardTransaction = Miner.rewardTransaction(minedBlock);

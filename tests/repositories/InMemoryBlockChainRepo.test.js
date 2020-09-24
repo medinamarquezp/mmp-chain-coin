@@ -1,3 +1,4 @@
+const Hash = require("@services/Hash");
 const InMemoryBlockChainRepo = require("@repositories/InMemoryBlockChainRepo");
 const BlockChain = require("@entities/BlockChain");
 describe("In memory block chain repository", () => {
@@ -15,6 +16,6 @@ describe("In memory block chain repository", () => {
     repo.mineBlock(requestBlockData);
     const getAllBlock = repo.getAllBlocks();
     const getLastMinedBlock = getAllBlock[getAllBlock.length - 1];
-    expect(getLastMinedBlock.data).toEqual(requestBlockData);
+    expect(getLastMinedBlock.data).toEqual(Hash.sha256(requestBlockData));
   });
 });

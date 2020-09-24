@@ -1,4 +1,5 @@
 const Block = require("@entities/Block");
+const Hash = require("@services/Hash");
 const { DIFFICULTY } = require("@config");
 describe("Block entity test", () => {
   let data, lastBlock, block;
@@ -8,7 +9,7 @@ describe("Block entity test", () => {
     block = Block.mine(lastBlock, data);
   });
   test("input data should be equal to block data", () => {
-    expect(data).toEqual(block.data);
+    expect(Hash.sha256(data)).toEqual(block.data);
   });
   test("Block lastHash property should be equal to last block hash", () => {
     expect(block.lastHash).toEqual(lastBlock.hash);
