@@ -44,7 +44,7 @@
   "homepage": "https://github.com/medinamarquezp/mmp-chain-coin#readme",
   "devDependencies": {
     "link-module-alias": "^1.2.0",
-    "nodemon": "^2.0.4"
+    "nodemon": "^2.0.21"
   },
   "dependencies": {
     "bcrypt": "^5.0.0",
